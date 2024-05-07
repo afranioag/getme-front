@@ -1,0 +1,1 @@
+export const GET_ME_API_ENDPOINT = '/api'

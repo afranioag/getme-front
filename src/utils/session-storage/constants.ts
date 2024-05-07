@@ -1,0 +1,1 @@
+export const SESSION_DATA_STORAGE_KEY = `@getMe:session-data`
