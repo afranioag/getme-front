@@ -78,8 +78,8 @@ const ReportPage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-800">
-      <div className="relative h-24 bg-cover bg-center flex justify-center items-center">
+    <div className="min-h-screen flex flex-col bg-gray-800">
+      <div className="flex justify-end p-10 text-2xl">
         <Link
           href="/"
           className="text-white hover:text-gray-500 hover:bg-gray-100 font-bold px-12 rounded"
@@ -88,9 +88,12 @@ const ReportPage = () => {
         </Link>
       </div>
 
-      <div className="text-black max-w-5xl mx-auto bg-white p-4 rounded shadow border-b border border-gray-400 mb-4">
+      <div className="flex flex-col justify-center items-center text-black max-w-5xl mx-auto bg-white p-3 rounded shadow border-b border border-gray-400 mb-4">
         <h1 className="text-2xl font-bold mb-5">Reportar Desaparecimento</h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4 flex flex-col justify-center items-center"
+        >
           <div>
             <h2 className="font-semibold text-lg">Informações Pessoais</h2>
             <div className="flex flex-wrap -mx-2">
@@ -304,7 +307,7 @@ const ReportPage = () => {
 
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="text-2xl bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded w-48"
           >
             Cadastrar
           </button>

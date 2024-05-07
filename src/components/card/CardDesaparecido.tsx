@@ -17,31 +17,31 @@ const CardDesaparecido: React.FC<CardDesaparecidoProps> = ({
   const imagePath = "/images/perfil1.png";
 
   return (
-    <div className="shadow-md rounded-lg max-w-sm mx-auto h-auto bg-blue-300 p-2 text-center border border-gray-950">
-      <div className="text-start">
-        <div className="mb-2 flex justify-center">
+    <div className="shadow-md rounded-lg w-72 mx-auto bg-gray-200 p-1 text-center border border-gray-500">
+      <div className="text-center">
+        <div className="flex justify-center">
           <Image
             src={imagePath}
             alt="Foto do Desaparecido"
-            width={260}
-            height={260}
+            width={220}
+            height={220}
             className="rounded-lg"
           />
         </div>
-        <div>
+        <div className="text-black text-lg">
           <h2 className="text-black text-xl font-bold">
             {desaparecido.person().name()}
           </h2>
-          <p className="text-black text-lg">
+          <p>
             Idade: {desaparecido.person().age()}, Altura:{" "}
             {desaparecido.person().height()} cm
           </p>
-          <p className="text-black text-lg">
+          <p>
             Último local visto: {desaparecido.lastSeenLocation().city},{" "}
             {desaparecido.lastSeenLocation().state}
           </p>
         </div>
-        <div className="flex bg-gray-600 hover:bg-gray-800 items-center justify-center rounded-lg">
+        <div className="flex bg-slate-500 hover:bg-slate-800 items-center justify-center rounded-lg">
           <Link href={`personview`}>
             <p className=" text-white font-bold py-2">Visualizar</p>
           </Link>
