@@ -12,13 +12,12 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setPasswordError(true);
     } else {
       setPasswordError(false);
-      // Logic to handle form submission
     }
   };
 

@@ -25,8 +25,9 @@ const ReportPage = () => {
     postalCode: "",
   });
 
-  // Função para converter arquivo para base64
-  const convertToBase64 = (file) => {
+  const convertToBase64 = (
+    file: File
+  ): Promise<string | ArrayBuffer | null> => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
@@ -41,7 +42,12 @@ const ReportPage = () => {
     });
   };
 
-  const handleInputChange = (event, section) => {
+  const handleInputChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+    section: "person" | "location"
+  ) => {
     const { name, value } = event.target;
     if (section === "person") {
       setPerson((prevState) => ({ ...prevState, [name]: value }));
@@ -50,33 +56,33 @@ const ReportPage = () => {
     }
   };
 
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
     if (file) {
       const base64 = await convertToBase64(file);
-      setPerson((prevState) => ({ ...prevState, image: base64 }));
+      setPerson((prevState) => ({ ...prevState, image: base64 as string }));
     }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const reportData = { person, lastSeenLocation: location };
     console.log(reportData); // Para verificação dos dados antes do envio
 
-    fetch("http://localhost:8081/api/reports/users", {
+    fetch("http://app-getme-7e927ed7a7c0.herokuapp.com/api/reports/users", {
       method: "POST",
       body: JSON.stringify(reportData),
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "Bearer eyJraWQiOiI2NDIxNzYyNy1mZWU2LTQ2MWUtYmIyMS0zZmU1MTQxNzIxYmYiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJnZXRtZSIsImF1ZCI6ImdldG1lIiwibmJmIjoxNzE0NjIzODIzLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODEiLCJleHAiOjE3MTQ3MTAyMjMsImlhdCI6MTcxNDYyMzgyMywiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJ1c2VybmFtZSI6ImFmcmFuaW8uY2V0QGdtYWlsLmNvbSJ9.zBpN_JlpyxzXV4gO9xNfGLR2n25iYeoNesCqq-nnfbNmBdirRgswZsN6lg_38mcjqv2cmQp2NJsVpDdrKkpb6yW_Ea9x1-221cRyOx88tL4jxqPbUd4Z_jj2FNarMa0kaffnnlddYM1ihmaJMG9kq80xb15Yt2WDGuuLW5copUTumyjMFayafHOC-BG5cxLlmmB4bVhGXB_pxv2Veem7IX2gsQV_SWzgJOA1lzHPj4-Gxa1fHN67kMCigugjTPeshQFO1hmf0pD2hnzG6v_k_Ymxcdeq3EKiJG-VTwGvva6UmCJtuRe_ltICp0otW1KIpAZunkAJJS-PzM7gFJRvrg", // Substitua pelo seu token JWT real
+        Authorization: "Bearer token_deve_ir_aqui",
       },
     })
       .then((response) => response.json())
       .then((data) => console.log("Success:", data))
       .catch((error) => console.error("Error:", error));
   };
-
   return (
     <div className="min-h-screen flex flex-col bg-gray-800">
       <div className="flex justify-end p-10 text-2xl">

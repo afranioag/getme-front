@@ -2,13 +2,34 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
-import imgHome from "../../public/images/gray.jpg";
 import Menu from "@/components/menu/Menu";
+
+interface LastSeenLocation {
+  city: string;
+  state: string;
+  neighborhood: string;
+  number: string;
+  postalCode: string;
+}
+
+interface Person {
+  name: string;
+  age: number;
+  height: number;
+  eyeColor: string;
+  hairColor: string;
+  image: string;
+}
+
+interface Report {
+  person: Person;
+  lastSeenLocation?: LastSeenLocation;
+}
 
 const ViewPerson = () => {
   const router = useRouter();
-  const [id, setId] = useState(1);
-  const [report, setReport] = useState(null);
+  const [id, setId] = useState<number>(1);
+  const [report, setReport] = useState<Report | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,18 +42,18 @@ const ViewPerson = () => {
           setLoading(false);
         })
         .catch((error) => {
-          console.error("Error fetching data: ", error);
+          console.error("Erro ao buscar dados: ", error);
           setLoading(false);
         });
     }
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Carregando...</div>;
   }
 
   if (!report) {
-    return <div>No data found.</div>;
+    return <div>Nenhum dado encontrado.</div>;
   }
 
   const { person, lastSeenLocation } = report;
@@ -53,7 +74,7 @@ const ViewPerson = () => {
       </p>
 
       <div
-        className="flex m-8 p-1 border h-[38rem] rounded-lg "
+        className="flex m-8 p-1 border h-[38rem] rounded-lg"
         style={{ width: "90rem" }}
       >
         <div className="relative w-2/5 mr-1">
@@ -67,7 +88,7 @@ const ViewPerson = () => {
         </div>
 
         <div
-          className="flex flex-col justify-center items-center bg-blue-300  text-black p-4"
+          className="flex flex-col justify-center items-center bg-blue-300 text-black p-4"
           style={{ width: "55rem" }}
         >
           <h1 className="text-4xl">{person.name}</h1>

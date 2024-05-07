@@ -1,4 +1,3 @@
-// components/Menu.js
 import MenuItem from "./MenuItem";
 
 const Menu = () => {
