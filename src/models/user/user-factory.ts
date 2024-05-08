@@ -17,7 +17,7 @@ class UserFactory {
       id: response.id,
       name: response.name,
       age: response.age,
-      phone: response.phone
+      phone: response.phone,
     };
   }
 
@@ -26,7 +26,7 @@ class UserFactory {
       id: user.id(),
       name: user.name(),
       age: user.age(),
-      phone: user.phone()
+      phone: user.phone(),
     };
   }
 
@@ -36,4 +36,3 @@ class UserFactory {
 }
 
 export default UserFactory;
-

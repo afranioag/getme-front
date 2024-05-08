@@ -6,7 +6,9 @@ class InformationFactory {
     return new Information(this.mapResponseToFields(response));
   }
 
-  static createManyFromResponse(response: InformationResponse[]): Information[] {
+  static createManyFromResponse(
+    response: InformationResponse[]
+  ): Information[] {
     return response.map(
       (response) => new Information(this.mapResponseToFields(response))
     );
@@ -20,7 +22,7 @@ class InformationFactory {
       locationDetails: response.locationDetails,
       message: response.message,
       reportId: response.reportId,
-      phone: response.phone
+      phone: response.phone,
     };
   }
 
@@ -42,4 +44,3 @@ class InformationFactory {
 }
 
 export default InformationFactory;
-

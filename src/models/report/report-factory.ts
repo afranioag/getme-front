@@ -8,7 +8,7 @@ class ReportFactory {
     return new Report(this.mapResponseToFields(response));
   }
 
-  static createManyFromResponse(response: ReportResponse[]): Report[] { 
+  static createManyFromResponse(response: ReportResponse[]): Report[] {
     return response.map((response) => this.createFromResponse(response));
   }
 
@@ -26,7 +26,9 @@ class ReportFactory {
       id: report.id(),
       person: PersonFactory.toFields(report.person()),
       lastSeenLocation: report.lastSeenLocation(),
-      informations: report.informations()?.map(information => InformationFactory.toFields(information))
+      informations: report
+        .informations()
+        ?.map((information) => InformationFactory.toFields(information)),
     };
   }
 }
