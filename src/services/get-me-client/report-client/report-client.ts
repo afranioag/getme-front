@@ -3,7 +3,7 @@ import { AxiosInstance, AxiosResponse } from "axios";
 import RestAPIClient from "@/services/rest-api-client/rest-api-client";
 import UserFactory from "@/models/user/user-factory";
 import { UserResponse } from "@/models/user/types";
-import { UserCreationData, UserUpdateData } from "./types";
+
 import {
   getDeleteReportsByIdEndpoint,
   getReportsByIdEndpoint,
@@ -13,19 +13,21 @@ import {
 import ReportFactory from "@/models/report/report-factory";
 import { ReportResponse } from "@/models/report/types";
 import SessionStorageClient from "@/utils/session-storage/session-storage-client";
+import { UserCreationData } from "../user-client/types";
+import { ReportCreationData } from "./types";
 
 class ReportClient extends RestAPIClient {
   constructor(api: AxiosInstance) {
     super(api);
   }
 
-  async create(creationData: UserCreationData) {
+  async create(creationData: ReportCreationData) {
     const storage = new SessionStorageClient();
     const data = storage.read();
     const response = await this.api.post<
       ReportResponse,
       AxiosResponse<ReportResponse>,
-      UserCreationData
+      ReportCreationData
     >(getReportsUsersEndpoint(), creationData, {
       headers: {
         Authorization: `Bearer ${data?.credentials.access_token}`,
@@ -40,11 +42,7 @@ class ReportClient extends RestAPIClient {
     const response = await this.api.get<
       ReportResponse,
       AxiosResponse<ReportResponse>
-    >(getReportsByIdEndpoint(id), {
-      headers: {
-        Authorization: `Bearer ${data?.credentials.access_token}`,
-      },
-    });
+    >(getReportsByIdEndpoint(id));
     return ReportFactory.createFromResponse(response.data);
   }
 

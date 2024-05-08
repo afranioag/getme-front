@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import router from "next/router";
 import useSession from "@/hooks/session/use-session/use-session";
+import useAPI from "@/hooks/api/use-api/use-api";
 
 const ReportPage = () => {
   const session = useSession();
+  const { getMe } = useAPI();
   const [person, setPerson] = useState({
     name: "",
     age: "",
@@ -72,19 +74,11 @@ const ReportPage = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const reportData = { person, lastSeenLocation: location };
-    console.log(reportData); // Para verificação dos dados antes do envio
 
-    fetch("http://app-getme-7e927ed7a7c0.herokuapp.com/api/reports/users", {
-      method: "POST",
-      body: JSON.stringify(reportData),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer token_deve_ir_aqui",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log("Success:", data))
-      .catch((error) => console.error("Error:", error));
+    const report = await getMe.getReportClient().create(reportData);
+    if (report) {
+      router.push("/");
+    }
   };
 
   useEffect(() => {
