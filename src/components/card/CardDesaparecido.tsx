@@ -15,6 +15,7 @@ const CardDesaparecido: React.FC<CardDesaparecidoProps> = ({
   }
 
   const imagePath = desaparecido.person().image() || "/images/perfil1.png";
+  const reportId = desaparecido.id();
 
   return (
     <div className="shadow-md rounded-lg w-72 max-h-96 mx-auto  p-1 text-center border border-gray-500">
@@ -44,7 +45,7 @@ const CardDesaparecido: React.FC<CardDesaparecidoProps> = ({
         </div>
 
         <div className="flex bg-slate-500 hover:bg-slate-800 items-center justify-center rounded-lg mt-4">
-          <Link href={`personview`}>
+          <Link href={`/personview/${reportId}`}>
             <p className="text-white font-bold py-2">Visualizar</p>
           </Link>
         </div>

@@ -82,7 +82,6 @@ const ReportPage = () => {
   };
 
   useEffect(() => {
-    console.log(session.user);
     if (session.user === null) {
       router.push("/");
     }

@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import CarouselDesaparecidos from "../components/card/CarouselDesaparecidos";
 import "tailwindcss/tailwind.css";
 import Menu from "@/components/menu/Menu";
+import useSession from "@/hooks/session/use-session/use-session";
+import InformativeModal from "@/components/modal/modalinformative";
+import router from "next/router";
+import MenuLoged from "@/components/menu/MenuLoged";
 
 export default function Home() {
+  const session = useSession();
+  const [isInfoModalOpen, setInfoModalOpen] = useState(false);
+
+  const openInfoModal = () => setInfoModalOpen(true);
+  const closeInfoModal = () => setInfoModalOpen(false);
+
+  const handleButtonClick = () => {
+    if (session.user !== null) {
+      router.push("/report");
+    } else {
+      openInfoModal();
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-800">
       <div className="relative h-24 bg-cover bg-center flex justify-center items-center">
-        <Menu />
+        {session.user !== null ? <MenuLoged /> : <Menu />}
       </div>
 
       <div className="bg-gray-50 ">
@@ -26,14 +44,13 @@ export default function Home() {
         </div>
 
         <div className="py-2 flex flex-col items-center">
-          <div className="flex justify-center items-center flex-grow text-center w-96 bg-red-500 hover:bg-red-700 rounded-lg">
-            <Link href="report">
-              <p className="py-2 text-lg font-bold  text-black">
-                Conhece alguém que desapareceu?
-                <br /> CADASTRE!
-              </p>
-            </Link>
-          </div>
+          <button
+            onClick={handleButtonClick}
+            className="flex justify-center items-center flex-grow text-center w-96 bg-red-500 hover:bg-red-700 rounded-lg py-2 text-lg font-bold text-black"
+          >
+            Conhece alguém que desapareceu?
+            <br /> CADASTRE!
+          </button>
         </div>
 
         <div className="py-4 flex items-center justify-center">
@@ -44,6 +61,12 @@ export default function Home() {
       <footer className="flex  justify-center items-center text-center mt-auto h-12 bg-gray-800">
         <p>Email: getmedesaparecidos@gmail.com</p>
       </footer>
+
+      <InformativeModal
+        isOpen={isInfoModalOpen}
+        onClose={closeInfoModal}
+        message="Você precisa estar logado para acessar este recurso."
+      />
     </div>
   );
 }
