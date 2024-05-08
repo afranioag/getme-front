@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import InputField from "../components/pages/InputField";
+import InputField from "../components/input/InputField";
 import useSession from "@/hooks/session/use-session/use-session";
 import { useRouter } from "next/router";
 

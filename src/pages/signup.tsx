@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import InputField from "../components/pages/InputField";
+import InputField from "../components/input/InputField";
 import imgHome from "../../public/images/gray.jpg";
 import Link from "next/link";
 

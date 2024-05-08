@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { PersonFields } from "../../models/person/types";
 import Report from "@/models/report/report";
 
 interface CardDesaparecidoProps {
@@ -14,21 +13,25 @@ const CardDesaparecido: React.FC<CardDesaparecidoProps> = ({
   if (!desaparecido) {
     return <div>Carregando...</div>;
   }
-  const imagePath = "/images/perfil1.png";
+
+  const imagePath = desaparecido.person().image() || "/images/perfil1.png";
 
   return (
-    <div className="shadow-md rounded-lg w-72 mx-auto bg-gray-200 p-1 text-center border border-gray-500">
+    <div className="shadow-md rounded-lg w-72 max-h-96 mx-auto  p-1 text-center border border-gray-500">
       <div className="text-center">
-        <div className="flex justify-center">
+        {/* Container de Imagem fixo */}
+        <div className=" w-56 h-48 mx-auto mb-4">
           <Image
             src={imagePath}
             alt="Foto do Desaparecido"
             width={220}
             height={220}
-            className="rounded-lg"
+            className="rounded-lg object-cover w-full h-full"
           />
         </div>
-        <div className="text-black text-lg">
+
+        {/* Informações do Card com Limite de Altura */}
+        <div className="text-black text-lg max-h-20 overflow-y-auto ">
           <h2 className="text-black text-xl font-bold">
             {desaparecido.person().name()}
           </h2>
@@ -37,13 +40,15 @@ const CardDesaparecido: React.FC<CardDesaparecidoProps> = ({
             {desaparecido.person().height()} cm
           </p>
           <p>
-            Último local visto: {desaparecido.lastSeenLocation().city},{" "}
+            Local visto: {desaparecido.lastSeenLocation().city},{" "}
             {desaparecido.lastSeenLocation().state}
           </p>
         </div>
-        <div className="flex bg-slate-500 hover:bg-slate-800 items-center justify-center rounded-lg">
+
+        {/* Botão de Visualização */}
+        <div className="flex bg-slate-500 hover:bg-slate-800 items-center justify-center rounded-lg mt-4">
           <Link href={`personview`}>
-            <p className=" text-white font-bold py-2">Visualizar</p>
+            <p className="text-white font-bold py-2">Visualizar</p>
           </Link>
         </div>
       </div>
