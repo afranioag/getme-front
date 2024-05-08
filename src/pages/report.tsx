@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import router from "next/router";
+import useSession from "@/hooks/session/use-session/use-session";
 
 const ReportPage = () => {
+  const session = useSession();
   const [person, setPerson] = useState({
     name: "",
     age: "",
@@ -83,6 +86,14 @@ const ReportPage = () => {
       .then((data) => console.log("Success:", data))
       .catch((error) => console.error("Error:", error));
   };
+
+  useEffect(() => {
+    console.log(session.user);
+    if (session.user === null) {
+      router.push("/");
+    }
+  });
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-800">
       <div className="flex justify-end p-10 text-2xl">

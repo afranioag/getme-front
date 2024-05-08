@@ -19,7 +19,6 @@ const CardDesaparecido: React.FC<CardDesaparecidoProps> = ({
   return (
     <div className="shadow-md rounded-lg w-72 max-h-96 mx-auto  p-1 text-center border border-gray-500">
       <div className="text-center">
-        {/* Container de Imagem fixo */}
         <div className=" w-56 h-48 mx-auto mb-4">
           <Image
             src={imagePath}
@@ -30,7 +29,6 @@ const CardDesaparecido: React.FC<CardDesaparecidoProps> = ({
           />
         </div>
 
-        {/* Informações do Card com Limite de Altura */}
         <div className="text-black text-lg max-h-20 overflow-y-auto ">
           <h2 className="text-black text-xl font-bold">
             {desaparecido.person().name()}
@@ -45,7 +43,6 @@ const CardDesaparecido: React.FC<CardDesaparecidoProps> = ({
           </p>
         </div>
 
-        {/* Botão de Visualização */}
         <div className="flex bg-slate-500 hover:bg-slate-800 items-center justify-center rounded-lg mt-4">
           <Link href={`personview`}>
             <p className="text-white font-bold py-2">Visualizar</p>

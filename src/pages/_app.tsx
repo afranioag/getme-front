@@ -13,21 +13,19 @@ export default function App({ Component, pageProps }: AppProps) {
         queries: { refetchOnWindowFocus: false },
       },
     })
-  ).current
+  ).current;
 
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <APIContextProvider>
           <SessionContextProvider>
-
             <Component {...pageProps} />
-
           </SessionContextProvider>
         </APIContextProvider>
       </QueryClientProvider>
 
       <Toaster />
     </>
-  )
+  );
 }

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import InputField from "../components/input/InputField";
-import imgHome from "../../public/images/gray.jpg";
 import Link from "next/link";
+import useAPI from "@/hooks/api/use-api/use-api";
 
 const SignUp = () => {
+  const { getMe } = useAPI();
   const [name, setName] = useState("");
   const [document, setDocument] = useState("");
   const [phone, setPhone] = useState("");
@@ -18,6 +19,21 @@ const SignUp = () => {
       setPasswordError(true);
     } else {
       setPasswordError(false);
+      getMe.getUserClient().create({
+        name,
+        document,
+        phone,
+        email,
+        password,
+        passwordConfirm: confirmPassword,
+        image: "",
+      });
+      setDocument("");
+      setName("");
+      setPassword("");
+      setConfirmPassword("");
+      setEmail("");
+      setPhone("");
     }
   };
 
@@ -56,14 +72,21 @@ const SignUp = () => {
                 label="Nome"
                 type="text"
                 placeholder="Nome completo"
+                onChange={(target) => setName(target.currentTarget.value)}
               />
 
               <div className="flex justify-between  text-sm font-bold mb-2">
-                <InputField label="Documento" type="text" placeholder="CPF" />
+                <InputField
+                  label="Documento"
+                  type="text"
+                  placeholder="CPF"
+                  onChange={(target) => setDocument(target.currentTarget.value)}
+                />
                 <InputField
                   label="Telefone"
                   type="tel"
                   placeholder="Telefone com DDD"
+                  onChange={(target) => setPhone(target.currentTarget.value)}
                 />
               </div>
 
@@ -72,6 +95,7 @@ const SignUp = () => {
                 type="email"
                 placeholder="Email"
                 required
+                onChange={(target) => setEmail(target.currentTarget.value)}
               />
 
               <div className="flex justify-between">
@@ -80,12 +104,16 @@ const SignUp = () => {
                   type="password"
                   placeholder="Senha"
                   required
+                  onChange={(target) => setPassword(target.currentTarget.value)}
                 />
                 <InputField
                   label="Confirmar Senha"
                   type="password"
                   placeholder="Confirmar senha"
                   required
+                  onChange={(target) =>
+                    setConfirmPassword(target.currentTarget.value)
+                  }
                 />
               </div>
 
