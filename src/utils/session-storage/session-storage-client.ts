@@ -1,34 +1,38 @@
-import { TokenResponse } from '@/services/get-me-client/auth-client/types'
-import { SESSION_DATA_STORAGE_KEY } from './constants'
+import { TokenResponse } from "@/services/get-me-client/auth-client/types";
+import { SESSION_DATA_STORAGE_KEY } from "./constants";
+import User from "@/models/user/user";
 
 interface PersistedSessionData {
-  credentials: TokenResponse
+  credentials: TokenResponse;
+  user: User | null;
 }
 
 class SessionStorageClient {
-  constructor() {
-
-  }
+  constructor() {}
   save(sessionData: PersistedSessionData) {
-    window.localStorage.setItem(SESSION_DATA_STORAGE_KEY, JSON.stringify(sessionData))
+    window.localStorage.setItem(
+      SESSION_DATA_STORAGE_KEY,
+      JSON.stringify(sessionData)
+    );
   }
 
   read(): PersistedSessionData | null {
-    
-    const stringifiedSessionData = window.localStorage.getItem(SESSION_DATA_STORAGE_KEY)
-    
+    const stringifiedSessionData = window.localStorage.getItem(
+      SESSION_DATA_STORAGE_KEY
+    );
+
     if (!stringifiedSessionData) {
-      return null
+      return null;
     }
 
-    const sessionData = JSON.parse(stringifiedSessionData)
-    
-    return sessionData
+    const sessionData = JSON.parse(stringifiedSessionData);
+
+    return sessionData;
   }
 
   clear() {
-    window.localStorage.removeItem(SESSION_DATA_STORAGE_KEY)
+    window.localStorage.removeItem(SESSION_DATA_STORAGE_KEY);
   }
 }
 
-export default SessionStorageClient
+export default SessionStorageClient;

@@ -1,10 +1,11 @@
+import SessionContext, {
+  SessionContextValue,
+} from "@/contexts/session-context/session-context";
 
-import SessionContext, { SessionContextValue } from "@/contexts/session-context/session-context"
-
-export type SESSION = SessionContextValue
+export type SESSION = SessionContextValue;
 
 function useSession(): SESSION {
-  return SessionContext.useContext()
+  return SessionContext.useContext();
 }
 
-export default useSession
+export default useSession;
