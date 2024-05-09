@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import InputField from "../components/input/InputField";
 import Link from "next/link";
 import useAPI from "@/hooks/api/use-api/use-api";
 
@@ -28,12 +27,12 @@ const SignUp = () => {
         passwordConfirm: confirmPassword,
         image: "",
       });
-      setDocument("");
       setName("");
+      setDocument("");
+      setPhone("");
+      setEmail("");
       setPassword("");
       setConfirmPassword("");
-      setEmail("");
-      setPhone("");
     }
   };
 
@@ -68,54 +67,94 @@ const SignUp = () => {
               Criar Conta
             </h2>
             <form onSubmit={handleSubmit}>
-              <InputField
-                label="Nome"
-                type="text"
-                placeholder="Nome completo"
-                onChange={(target) => setName(target.currentTarget.value)}
-              />
-
-              <div className="flex justify-between  text-sm font-bold mb-2">
-                <InputField
-                  label="Documento"
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Nome
+                </label>
+                <input
                   type="text"
-                  placeholder="CPF"
-                  onChange={(target) => setDocument(target.currentTarget.value)}
-                />
-                <InputField
-                  label="Telefone"
-                  type="tel"
-                  placeholder="Telefone com DDD"
-                  onChange={(target) => setPhone(target.currentTarget.value)}
+                  placeholder="Nome completo"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded"
                 />
               </div>
 
-              <InputField
-                label="Email"
-                type="email"
-                placeholder="Email"
-                required
-                onChange={(target) => setEmail(target.currentTarget.value)}
-              />
+              <div className="flex justify-between mb-4">
+                <div className="w-1/2 pr-2">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Documento
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="CPF"
+                    value={document}
+                    onChange={(e) => setDocument(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded"
+                  />
+                </div>
+                <div className="w-1/2 pl-2">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Telefone
+                  </label>
+                  <input
+                    type="tel"
+                    placeholder="Telefone com DDD"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded"
+                  />
+                </div>
+              </div>
 
-              <div className="flex justify-between">
-                <InputField
-                  label="Senha"
-                  type="password"
-                  placeholder="Senha"
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded"
                   required
-                  onChange={(target) => setPassword(target.currentTarget.value)}
-                />
-                <InputField
-                  label="Confirmar Senha"
-                  type="password"
-                  placeholder="Confirmar senha"
-                  required
-                  onChange={(target) =>
-                    setConfirmPassword(target.currentTarget.value)
-                  }
                 />
               </div>
+
+              <div className="flex justify-between mb-4">
+                <div className="w-1/2 pr-2">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Senha
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="Senha"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded"
+                    required
+                  />
+                </div>
+                <div className="w-1/2 pl-2">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Confirmar Senha
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="Confirmar senha"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded"
+                    required
+                  />
+                </div>
+              </div>
+
+              {passwordError && (
+                <p className="text-red-500 text-xs italic mb-4">
+                  As senhas não correspondem
+                </p>
+              )}
 
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
