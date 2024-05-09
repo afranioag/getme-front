@@ -1,21 +1,7 @@
-import React, { useState } from "react";
-
-interface LocationDetails {
-  country: string;
-  state: string;
-  city: string;
-  neighborhood: string;
-  postalCode: string;
-}
-
-interface ReportInfo {
-  reportId: number;
-  name: string;
-  phone: string;
-  email: string;
-  message: string;
-  locationDetails: LocationDetails;
-}
+import useAPI from "@/hooks/api/use-api/use-api";
+import { InformationCreationData } from "@/services/get-me-client/information-client/types";
+import router from "next/router";
+import React, { useEffect, useState } from "react";
 
 interface ModalFormProps {
   isOpen: boolean;
@@ -24,20 +10,32 @@ interface ModalFormProps {
 }
 
 const ModalForm: React.FC<ModalFormProps> = ({ isOpen, onClose, reportId }) => {
-  const [formData, setFormData] = useState<ReportInfo>({
-    reportId,
+  const api = useAPI();
+
+  const [formData, setFormData] = useState<InformationCreationData>({
+    reportId: "",
     name: "",
     phone: "",
     email: "",
     message: "",
+    image: "",
     locationDetails: {
       country: "",
       state: "",
       city: "",
       neighborhood: "",
       postalCode: "",
+      number: "",
+      latitude: 0,
+      longitude: 0,
     },
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormData((prev) => ({ ...prev, reportId: reportId.toString() }));
+    }
+  }, [isOpen, reportId]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -54,22 +52,10 @@ const ModalForm: React.FC<ModalFormProps> = ({ isOpen, onClose, reportId }) => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-    const response = await fetch("/api/reports/info", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-    if (response.ok) {
-      alert("Informação enviada com sucesso!");
-      onClose();
-    } else {
-      alert("Erro ao enviar informação!");
-    }
+    const report = await api.getMe.getInformationClient().create(formData);
   };
 
   if (!isOpen) return null;
@@ -79,12 +65,7 @@ const ModalForm: React.FC<ModalFormProps> = ({ isOpen, onClose, reportId }) => {
       <div className="bg-gray-50 text-black rounded-lg p-6 w-[50rem] shadow-lg ">
         <h2 className="text-2xl font-bold mb-4">Adicionar Informação</h2>
         <form onSubmit={handleSubmit}>
-          <input
-            type="hidden"
-            name="reportId"
-            value={formData.reportId}
-            onChange={handleChange}
-          />
+          <input type="hidden" name="reportId" value={formData.reportId} />
           <label>
             Nome:
             <input
