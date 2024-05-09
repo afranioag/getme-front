@@ -1,7 +1,7 @@
 import { USERS_ENDPOINT } from "./constants";
 
 export function getUsersEndpoint(): string {
-  return `${USERS_ENDPOINT}`;
+  return `${USERS_ENDPOINT}/v1`;
 }
 
 export function getUsersByIdEndpoint(id: string): string {
