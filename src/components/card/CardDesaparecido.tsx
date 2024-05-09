@@ -44,11 +44,11 @@ const CardDesaparecido: React.FC<CardDesaparecidoProps> = ({
           </p>
         </div>
 
-        <div className="flex bg-slate-500 hover:bg-slate-800 items-center justify-center rounded-lg mt-4">
-          <Link href={`/personview/${reportId}`}>
-            <p className="text-white font-bold py-2">Visualizar</p>
-          </Link>
-        </div>
+        <Link href={`/personview/${reportId}`}>
+          <button className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-lg mt-4 w-full">
+            Visualizar
+          </button>
+        </Link>
       </div>
     </div>
   );

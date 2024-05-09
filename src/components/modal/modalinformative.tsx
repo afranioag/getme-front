@@ -14,7 +14,7 @@ const InformativeModal: React.FC<InformativeModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 text-black">
       <div className="bg-white p-4 w-80 rounded-lg shadow-lg text-center">
         <h2 className="text-2xl font-bold mb-4">Atenção!</h2>
         <p>{message}</p>
