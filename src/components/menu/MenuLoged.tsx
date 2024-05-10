@@ -18,6 +18,7 @@ const MenuLoged = () => {
       <MenuItem title="Perfil" href="/" />
       <MenuItem title="Sair" onClick={onLogout} />
       <MenuItem title="Sobre" href="/" />
+      <MenuItem title="Meu cadastros" href="/myreports" />
     </ul>
   );
 };
