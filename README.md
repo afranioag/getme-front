@@ -1,40 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Projeto de TCC Get-me
 
-## Getting Started
+Para ajudar a encontrar pessoas desaparecidas.
 
-First, run the development server:
+## Descrição do Projeto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Get-me é uma aplicação desenvolvida como parte do TCC para facilitar a busca por pessoas desaparecidas. O sistema conta com uma interface simples, intuitiva e com telas autenticadas e livres para oferecer informações confiáveis e atualizadas.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Ferramentas Utilizadas:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- Next.js: Framework que oferece Server-Side Rendering (SSR) e roteamento dinâmico.
+- TypeScript: Linguagem com tipagem estática para reduzir erros e facilitar a manutenção.
+- Tailwind CSS: Biblioteca de estilização que facilita a criação de designs responsivos e personalizados.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Como Subir o Projeto
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Desenvolvimento Local
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Para iniciar o projeto no modo de desenvolvimento:
 
-## Learn More
+1. Certifique-se de que você tem o `Node.js` e o `yarn` instalados.
 
-To learn more about Next.js, take a look at the following resources:
+2. Instale as dependências:
+   yarn install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Inicie o servidor de desenvolvimento:
+   yarn dev
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+O servidor estará disponível em `http://localhost:3000`.
 
-## Deploy on Vercel
+### Validação para Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Antes de mandar para deploy, valide a integridade da aplicação executando:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+yarn run build
+
+Este comando irá compilar o projeto e avisar sobre qualquer erro ou aviso que precise ser resolvido.
+
+### Backend
+
+Para que o aplicativo funcione completamente no ambiente de desenvolvimento, é importante que a aplicação backend também esteja em execução. Por favor, confira as instruções no link abaixo:
+
+[Link para o repositório do backend] https://github.com/afranioag/get-me.git
+
+## Autenticação
+
+A aplicação possui telas autenticadas e telas livres. Para acessar as áreas autenticadas, basta criar uma conta diretamente na aplicação.
+
+## Organização do Git
+
+Este projeto segue algumas diretrizes básicas para manter o código organizado:
+
+- **Branches:**
+
+  - `main`: Branch principal com a versão de produção.
+
+- **Pull Requests:**
+  - Garanta que todas as funcionalidades sejam revisadas antes do merge na `main`.
+
+Esperamos que essas diretrizes o ajudem a contribuir de maneira eficaz para o projeto!

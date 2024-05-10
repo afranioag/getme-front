@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import useAPI from "@/hooks/api/use-api/use-api";
 
 const SignUp = () => {
   const { getMe } = useAPI();
+  const router = useRouter();
   const [name, setName] = useState("");
   const [document, setDocument] = useState("");
   const [phone, setPhone] = useState("");
@@ -11,14 +13,23 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
       setPasswordError(true);
-    } else {
-      setPasswordError(false);
-      getMe.getUserClient().create({
+      return;
+    }
+
+    setPasswordError(false);
+    setErrorMessage("");
+
+    try {
+      await getMe.getUserClient().create({
         name,
         document,
         phone,
@@ -27,12 +38,25 @@ const SignUp = () => {
         passwordConfirm: confirmPassword,
         image: "",
       });
+
+      setSuccessMessage(
+        "Conta criada com sucesso! Redirecionando para a tela de login..."
+      );
+      setShowSuccessModal(true);
+
       setName("");
       setDocument("");
       setPhone("");
       setEmail("");
       setPassword("");
       setConfirmPassword("");
+
+      setTimeout(() => {
+        setShowSuccessModal(false);
+        router.push("/login");
+      }, 2000);
+    } catch (error) {
+      setErrorMessage("Erro ao registrar. Por favor, tente novamente.");
     }
   };
 
@@ -43,7 +67,7 @@ const SignUp = () => {
           href="/"
           className="text-white hover:text-gray-500 hover:bg-gray-100 font-bold px-12 rounded"
         >
-          Inicio
+          Início
         </Link>
       </div>
 
@@ -156,15 +180,11 @@ const SignUp = () => {
                 </p>
               )}
 
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Imagem de Perfil
-                </label>
-                <input
-                  type="file"
-                  className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                />
-              </div>
+              {errorMessage && (
+                <p className="text-red-500 text-xs italic mb-4">
+                  {errorMessage}
+                </p>
+              )}
 
               <button
                 type="submit"
@@ -176,6 +196,19 @@ const SignUp = () => {
           </div>
         </div>
       </div>
+
+      {showSuccessModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white text-black p-6 rounded shadow-lg text-center">
+            <h3 className="text-xl font-semibold mb-4">
+              Conta criada com sucesso!
+            </h3>
+            <p>
+              Você será redirecionado para a tela de login em alguns segundos...
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

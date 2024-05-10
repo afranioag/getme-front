@@ -1,16 +1,22 @@
+import { useRouter } from "next/router";
 import useSession from "@/hooks/session/use-session/use-session";
 import MenuItem from "./MenuItem";
 
 const MenuLoged = () => {
   const session = useSession();
+  const router = useRouter();
 
-  const userName = "Usuário";
+  const onLogout = () => {
+    console.log("CLEAR");
+    session.clearSession();
+    router.push("/");
+  };
 
   return (
     <ul className="flex justify-center">
-      <MenuItem title={userName} href="/" />
+      <MenuItem title="Usuário" href="/" />
       <MenuItem title="Perfil" href="/" />
-      <MenuItem title="Sair" href="/" />
+      <MenuItem title="Sair" onClick={onLogout} />
       <MenuItem title="Sobre" href="/" />
     </ul>
   );
