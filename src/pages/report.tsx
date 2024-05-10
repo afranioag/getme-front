@@ -3,17 +3,19 @@ import Link from "next/link";
 import router from "next/router";
 import useSession from "@/hooks/session/use-session/use-session";
 import useAPI from "@/hooks/api/use-api/use-api";
+import SuccessModal from "@/components/modal/SuccessModal";
 
 const ReportPage = () => {
   const session = useSession();
   const { getMe } = useAPI();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [person, setPerson] = useState({
     name: "",
     age: "",
     height: "",
     hairColor: "",
     eyeColor: "",
-    gender: "",
+    gender: "MALE",
     bodyMark: "",
     physicalDescription: "",
     psychologicalDescription: "",

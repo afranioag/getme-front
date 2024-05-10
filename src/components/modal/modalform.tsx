@@ -1,7 +1,7 @@
 import useAPI from "@/hooks/api/use-api/use-api";
 import { InformationCreationData } from "@/services/get-me-client/information-client/types";
-import router from "next/router";
 import React, { useEffect, useState } from "react";
+import SuccessModal from "./SuccessModal";
 
 interface ModalFormProps {
   isOpen: boolean;
@@ -11,6 +11,7 @@ interface ModalFormProps {
 
 const ModalForm: React.FC<ModalFormProps> = ({ isOpen, onClose, reportId }) => {
   const api = useAPI();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const [formData, setFormData] = useState<InformationCreationData>({
     reportId: "",
@@ -55,14 +56,25 @@ const ModalForm: React.FC<ModalFormProps> = ({ isOpen, onClose, reportId }) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const report = await api.getMe.getInformationClient().create(formData);
+    try {
+      await api.getMe.getInformationClient().create(formData);
+      setShowSuccessModal(true);
+    } catch (error) {
+      setShowSuccessModal(false);
+      console.error("Erro ao enviar as informações:", error);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowSuccessModal(false);
+    onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 ">
-      <div className="bg-gray-50 text-black rounded-lg p-6 w-[50rem] shadow-lg ">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="bg-gray-50 text-black rounded-lg p-6 w-[50rem] shadow-lg">
         <h2 className="text-2xl font-bold mb-4">Adicionar Informação</h2>
         <form onSubmit={handleSubmit}>
           <input type="hidden" name="reportId" value={formData.reportId} />
@@ -73,7 +85,7 @@ const ModalForm: React.FC<ModalFormProps> = ({ isOpen, onClose, reportId }) => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full p-2 border rounded mb-2  border-gray-500"
+              className="w-full p-2 border rounded mb-2 border-gray-500"
             />
           </label>
 
@@ -176,6 +188,13 @@ const ModalForm: React.FC<ModalFormProps> = ({ isOpen, onClose, reportId }) => {
           </div>
         </form>
       </div>
+      <SuccessModal
+        title="Informação enviada com sucesso!!!"
+        message="Você adicionou uma informação que ajudará a encontrar uma pessoa!"
+        isVisible={showSuccessModal}
+        duration={5000}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 };

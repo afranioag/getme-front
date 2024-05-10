@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import useAPI from "@/hooks/api/use-api/use-api";
+import SuccessModal from "@/components/modal/SuccessModal";
 
 const SignUp = () => {
   const { getMe } = useAPI();
@@ -13,7 +14,6 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -39,9 +39,6 @@ const SignUp = () => {
         image: "",
       });
 
-      setSuccessMessage(
-        "Conta criada com sucesso! Redirecionando para a tela de login..."
-      );
       setShowSuccessModal(true);
 
       setName("");
@@ -50,14 +47,13 @@ const SignUp = () => {
       setEmail("");
       setPassword("");
       setConfirmPassword("");
-
-      setTimeout(() => {
-        setShowSuccessModal(false);
-        router.push("/login");
-      }, 2000);
     } catch (error) {
       setErrorMessage("Erro ao registrar. Por favor, tente novamente.");
     }
+  };
+  const handleCloseModal = () => {
+    setShowSuccessModal(false);
+    router.push("/login");
   };
 
   return (
@@ -197,18 +193,13 @@ const SignUp = () => {
         </div>
       </div>
 
-      {showSuccessModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white text-black p-6 rounded shadow-lg text-center">
-            <h3 className="text-xl font-semibold mb-4">
-              Conta criada com sucesso!
-            </h3>
-            <p>
-              Você será redirecionado para a tela de login em alguns segundos...
-            </p>
-          </div>
-        </div>
-      )}
+      <SuccessModal
+        title="Conta criada com sucesso!"
+        message="Você será redirecionado para a tela de login em alguns segundos..."
+        isVisible={showSuccessModal}
+        duration={2000}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 };
