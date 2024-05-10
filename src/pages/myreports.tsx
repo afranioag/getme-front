@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import MenuLoged from "@/components/menu/MenuLoged";
 
 interface LastSeenLocation {
   country: string;
@@ -20,9 +21,18 @@ interface PersonDetails {
   image: string;
 }
 
+interface Information {
+  id: number;
+  responsibleName: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
 interface MyReport {
   person: PersonDetails;
   lastSeenLocation: LastSeenLocation;
+  informations: Information[];
 }
 
 // Dados mockdos até construir a integração com o back. Ajustando antes a tela.
@@ -45,6 +55,30 @@ const mockReports: MyReport[] = [
       number: "100",
       postalCode: "12345-678",
     },
+    informations: [
+      {
+        id: 1,
+        responsibleName: "Ana Paula",
+        email: "anapaula@example.com",
+        phone: "+5511987654321",
+        message: "Vi esta pessoa pela última vez no centro da cidade.",
+      },
+      {
+        id: 2,
+        responsibleName: "Marcos Silva",
+        email: "marcosilva@example.com",
+        phone: "+5511976543210",
+        message: "Acredito ter visto esta pessoa em um café na semana passada.",
+      },
+
+      {
+        id: 3,
+        responsibleName: "Marcos Silva",
+        email: "marcosilva@example.com",
+        phone: "+5511976543210",
+        message: "Acredito ter visto esta pessoa em um café na semana passada.",
+      },
+    ],
   },
   {
     person: {
@@ -64,6 +98,7 @@ const mockReports: MyReport[] = [
       number: "200",
       postalCode: "87654-321",
     },
+    informations: [],
   },
   {
     person: {
@@ -83,6 +118,7 @@ const mockReports: MyReport[] = [
       number: "300",
       postalCode: "11111-222",
     },
+    informations: [],
   },
   {
     person: {
@@ -102,6 +138,7 @@ const mockReports: MyReport[] = [
       number: "400",
       postalCode: "22222-333",
     },
+    informations: [],
   },
   {
     person: {
@@ -121,67 +158,122 @@ const mockReports: MyReport[] = [
       number: "500",
       postalCode: "33333-444",
     },
+    informations: [],
   },
 ];
 
 const MyReports = () => {
-  const [reports, setReports] = useState<MyReport[]>([]);
+  const [reports, setReports] = useState<MyReport[]>(mockReports);
+  const [selectedReportId, setSelectedReportId] = useState<number | null>(null);
 
-  // AQUI VOU ADICIONAR A CHAMADA AO BACK
   useEffect(() => {
     setReports(mockReports);
   }, []);
 
-  return (
-    <div className="flex flex-col items-center p-4">
-      <h1 className="text-4xl font-bold mb-8">
-        Meus Cadastros de Desaparecidos
-      </h1>
-      {reports.length > 0 ? (
-        reports.map((reports) => (
-          <div
-            key={reports.person.id}
-            className="bg-gray-200 flex m-4 h-[25rem] rounded-lg"
-            style={{ width: "60rem" }}
-          >
-            <div className="relative w-2/5 mr-1 bg-gray-400 rounded-lg">
-              <Image
-                src={reports.person.image || "/images/perfil2.jpg"}
-                alt={`Foto do Desaparecido ${reports.person.name}`}
-                layout="fill"
-                objectFit="cover"
-                className="rounded-l-lg"
-              />
-            </div>
+  const handleToggleDetails = (id: number) => {
+    setSelectedReportId(selectedReportId === id ? null : id);
+  };
 
-            <div
-              className="flex flex-col justify-center items-start text-black p-4"
-              style={{ width: "35rem" }}
-            >
-              <h1 className="text-3xl">{reports.person.name}</h1>
-              <p className="text-xl">Idade: {reports.person.age} anos</p>
-              <p className="text-xl">Altura: {reports.person.height} cm</p>
-              <p className="text-xl">
-                Cor dos Olhos: {reports.person.eyeColor}
-              </p>
-              <p className="text-xl">
-                Cor do Cabelo: {reports.person.hairColor}
-              </p>
-              <p className="text-xl">
-                Último Local Visto: {reports.lastSeenLocation?.city},{" "}
-                {reports.lastSeenLocation?.state},{" "}
-                {reports.lastSeenLocation?.neighborhood}, Nº{" "}
-                {reports.lastSeenLocation?.number}, CEP{" "}
-                {reports.lastSeenLocation?.postalCode}
-              </p>
-            </div>
-          </div>
-        ))
-      ) : (
-        <p className="text-xl text-red-500">
-          Você não tem nenhum cadastro de desaparecidos.
-        </p>
-      )}
+  return (
+    <div className="flex flex-col w-full min-h-screen  bg-gray-800">
+      <div className="relative h-24 bg-cover bg-center flex justify-center items-center">
+        <MenuLoged />
+      </div>
+
+      <div className="flex justify-between bg-gray-700">
+        <div className="justify-center items-center w-2/4">
+          <h1 className="text-4xl text-center text-black font-bold m-8">
+            Meus Cadastros de Desaparecidos
+          </h1>
+          {reports.length > 0 ? (
+            reports.map((report) => (
+              <div
+                key={report.person.id}
+                className="bg-gray-300 m-4 rounded-lg"
+              >
+                <div className="flex flex-col sm:flex-row">
+                  <div className="relative w-full sm:w-2/5 h-64 sm:h-auto bg-gray-400 rounded-lg">
+                    <Image
+                      src={report.person.image || "/images/perfil2.jpg"}
+                      alt={`Foto do Desaparecido ${report.person.name}`}
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-l-lg"
+                    />
+                  </div>
+                  <div className="flex-grow flex flex-col justify-center items-start text-black p-4">
+                    <h1 className="text-3xl">{report.person.name}</h1>
+                    <p className="text-xl">Idade: {report.person.age} anos</p>
+                    <p className="text-xl">Altura: {report.person.height} cm</p>
+                    <p className="text-xl">
+                      Cor dos Olhos: {report.person.eyeColor}
+                    </p>
+                    <p className="text-xl">
+                      Cor do Cabelo: {report.person.hairColor}
+                    </p>
+                    <p className="text-xl">
+                      Último Local Visto: {report.lastSeenLocation.city},{" "}
+                      {report.lastSeenLocation.state},{" "}
+                      {report.lastSeenLocation.neighborhood}, Nº{" "}
+                      {report.lastSeenLocation.number}, CEP{" "}
+                      {report.lastSeenLocation.postalCode}
+                    </p>
+                    <button
+                      onClick={() => handleToggleDetails(report.person.id)}
+                      className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-300"
+                    >
+                      Exibir Informações
+                    </button>
+                  </div>
+                </div>
+                {selectedReportId === report.person.id && (
+                  <div
+                    className="p-4 bg-gray-100 text-black"
+                    style={{ maxHeight: "18rem", overflowY: "auto" }}
+                  >
+                    <h2 className="text-2xl font-bold mb-4">
+                      Informações Detalhadas
+                    </h2>
+                    {report.informations.map((info, index) => (
+                      <div
+                        key={index}
+                        className="mb-6 p-4 bg-white rounded shadow"
+                      >
+                        <p className="text-lg font-bold">
+                          Nome Responsável: {info.responsibleName}
+                        </p>
+                        <p className="text-md">Email: {info.email}</p>
+                        <p className="text-md">Telefone: {info.phone}</p>
+                        <p className="text-md">Mensagem: {info.message}</p>
+                      </div>
+                    ))}
+                    {!report.informations.length && (
+                      <p className="text-lg text-gray-500">
+                        Não há informações adicionais para este desaparecido.
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))
+          ) : (
+            <p className="text-xl text-red-500">
+              Você não tem nenhum cadastro de desaparecidos.
+            </p>
+          )}
+        </div>
+        <div className="flex flex-col items-center justify-center w-2/4 h-screen text-gray-200 p-5">
+          <h1 className="text-4xl font-bold mb-8 text-center">
+            Você está vendo seus cadastros ou cadastros que você forneceu alguma
+            informação
+          </h1>
+          <p className="text-xl text-center">
+            Esta tela é dedicada a ajudar a encontrar pessoas desaparecidas.
+            Desejamos profundamente que todos os esforços aqui resultem em
+            finais felizes e reencontros.
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
