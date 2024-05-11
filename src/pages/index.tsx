@@ -29,15 +29,16 @@ export default function Home() {
         {session.user !== null ? <MenuLoged /> : <Menu />}
       </div>
 
-      <div className="bg-gray-50 ">
+      <div className="bg-gray-50 px-4 sm:px-0">
         <div className="py-2 flex-grow text-center w-full">
-          <h1 className="text-5xl font-bold text-gray-500 mb-4">
+          <h1 className="text-3xl sm:text-5xl font-bold text-gray-500 mb-4">
             Ajude a encontrar uma pessoa!
           </h1>
-          <p className="py-2 text-xl text-black mb-4">
+          <p className="py-2 text-sm sm:text-xl text-black mb-4">
             Nos últimos anos, uma média de 1800 pessoas somem anualmente no
             Brasil, cada um deixando um vazio nos corações de amigos e
-            familiares. <br />
+            familiares.
+            <br />
             Se você tem qualquer pista, por menor que seja, Não hesite! Uma
             simples informação pode ser a chave para unir uma família.
           </p>
@@ -46,10 +47,11 @@ export default function Home() {
         <div className="py-2 flex flex-col items-center">
           <button
             onClick={handleButtonClick}
-            className="flex justify-center items-center flex-grow text-center w-96 bg-red-500 hover:bg-red-700 rounded-lg py-2 text-lg font-bold text-black"
+            className="flex justify-center items-center flex-grow text-center w-full sm:w-96 bg-red-500 hover:bg-red-700 rounded-lg py-2 text-lg font-bold text-black"
           >
             Conhece alguém que desapareceu?
-            <br /> CADASTRE!
+            <br />
+            CADASTRE!
           </button>
         </div>
 
@@ -58,7 +60,7 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className="flex  justify-center items-center text-center mt-auto h-12 bg-gray-800">
+      <footer className="flex justify-center items-center text-center mt-auto h-12 bg-gray-800">
         <p>Email: getmedesaparecidos@gmail.com</p>
       </footer>
 

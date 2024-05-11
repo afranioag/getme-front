@@ -51,13 +51,14 @@ const SignUp = () => {
       setErrorMessage("Erro ao registrar. Por favor, tente novamente.");
     }
   };
+
   const handleCloseModal = () => {
     setShowSuccessModal(false);
     router.push("/login");
   };
 
   return (
-    <div className="min-h-screen flex bg-gray-800">
+    <div className="min-h-screen flex flex-col md:flex-row bg-gray-800">
       <div className="absolute top-0 right-0 p-20 text-2xl">
         <Link
           href="/"
@@ -67,9 +68,9 @@ const SignUp = () => {
         </Link>
       </div>
 
-      <div className="flex-grow flex mb-5 mt-20">
-        <div className="flex-1 flex items-center justify-end p-8 text-gray-100">
-          <div className="mr-14">
+      <div className="flex-1 flex flex-col md:flex-row mb-5 mt-20">
+        <div className="flex-1 flex items-center justify-center p-8 text-gray-100">
+          <div className="text-center md:text-left">
             <h2 className="text-6xl font-bold mb-2">Ajude alguém!</h2>
             <p className="text-3xl mb-4">
               Ao criar uma conta você poderá reportar um desaparecimento
@@ -81,7 +82,7 @@ const SignUp = () => {
         <div className="flex-1 flex justify-center items-center">
           <div
             className="bg-white text-gray-700 p-4 rounded-lg shadow-lg"
-            style={{ width: "600px" }}
+            style={{ maxWidth: "600px", width: "100%" }}
           >
             <h2 className="text-center text-2xl font-semibold mb-5">
               Criar Conta
@@ -100,8 +101,8 @@ const SignUp = () => {
                 />
               </div>
 
-              <div className="flex justify-between mb-4">
-                <div className="w-1/2 pr-2">
+              <div className="flex flex-wrap -mx-3 mb-4">
+                <div className="w-full md:w-1/2 px-3">
                   <label className="block text-gray-700 text-sm font-bold mb-2">
                     Documento
                   </label>
@@ -113,7 +114,7 @@ const SignUp = () => {
                     className="w-full p-2 border border-gray-300 rounded"
                   />
                 </div>
-                <div className="w-1/2 pl-2">
+                <div className="w-full md:w-1/2 px-3">
                   <label className="block text-gray-700 text-sm font-bold mb-2">
                     Telefone
                   </label>
@@ -141,8 +142,8 @@ const SignUp = () => {
                 />
               </div>
 
-              <div className="flex justify-between mb-4">
-                <div className="w-1/2 pr-2">
+              <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label className="block text-gray-700 text-sm font-bold mb-2">
                     Senha
                   </label>
@@ -155,7 +156,7 @@ const SignUp = () => {
                     required
                   />
                 </div>
-                <div className="w-1/2 pl-2">
+                <div className="w-full md:w-1/2 px-3">
                   <label className="block text-gray-700 text-sm font-bold mb-2">
                     Confirmar Senha
                   </label>
