@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Report from "@/models/report/report";
+import ReportGet from "@/models/report/report";
 
 interface CardDesaparecidoProps {
-  desaparecido: Report;
+  desaparecido: ReportGet;
 }
 
 const CardDesaparecido: React.FC<CardDesaparecidoProps> = ({

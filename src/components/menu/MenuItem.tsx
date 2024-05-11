@@ -2,9 +2,9 @@ import Link from "next/link";
 
 interface MenuItemProps {
   title: string;
-  href?: string; // Permitir href opcional para ações sem navegação
+  href?: string;
   className?: string;
-  onClick?: () => void; // Adicionar onClick opcional
+  onClick?: () => void;
 }
 const MenuItem = ({
   title,

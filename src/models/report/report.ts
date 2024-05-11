@@ -5,7 +5,7 @@ import PersonFactory from "../person/person-factory";
 import { LastSeenLocation } from "../person/types";
 import { ReportFields } from "./types";
 
-class Report {
+class ReportGet {
   private _id: number;
   private _person: Person;
   private _informations: Information[];
@@ -37,4 +37,4 @@ class Report {
   }
 }
 
-export default Report;
+export default ReportGet;

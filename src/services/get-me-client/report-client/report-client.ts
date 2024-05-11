@@ -1,8 +1,6 @@
 import { AxiosInstance, AxiosResponse } from "axios";
 
 import RestAPIClient from "@/services/rest-api-client/rest-api-client";
-import UserFactory from "@/models/user/user-factory";
-import { UserResponse } from "@/models/user/types";
 
 import {
   getDeleteReportsByIdEndpoint,
