@@ -15,12 +15,12 @@ const MenuLoged = () => {
   };
 
   return (
-    <ul className="flex justify-center">
+    <ul className="flex justify-center flex-wrap">
       <MenuItem title="Usuário" href="/" />
       <MenuItem title="Perfil" href="/" />
       <MenuItem title="Sair" onClick={onLogout} />
       <MenuItem title="Sobre" href="/" />
-      <MenuItem title="Meu cadastros" href="/myreports" />
+      <MenuItem title="Meus cadastros" href="/myreports" />
     </ul>
   );
 };

@@ -6,7 +6,6 @@ interface MenuItemProps {
   className?: string;
   onClick?: () => void; // Adicionar onClick opcional
 }
-
 const MenuItem = ({
   title,
   href = "#",
@@ -14,18 +13,18 @@ const MenuItem = ({
   onClick,
 }: MenuItemProps) => {
   return (
-    <li className={`mx-4 text-2xl ${className}`}>
+    <li className={`mx-2 md:mx-4 text-xl md:text-2xl ${className}`}>
       {onClick ? (
         <button
           onClick={onClick}
-          className="text-white hover:text-gray-500 hover:bg-gray-100"
+          className="text-white hover:text-gray-500 hover:bg-gray-100 px-2 md:px-0"
         >
           {title}
         </button>
       ) : (
         <Link
           href={href}
-          className="text-white hover:text-gray-500 hover:bg-gray-100"
+          className="text-white hover:text-gray-500 hover:bg-gray-100 px-2 md:px-0"
         >
           {title}
         </Link>
