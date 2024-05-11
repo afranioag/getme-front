@@ -29,7 +29,8 @@ const SessionContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const clearSession = useCallback(async () => {
+  const clearSession = useCallback(() => {
+    console.log("Clearing session...");
     const storage = new SessionStorageClient();
     storage.clear();
     queryClient.clear();

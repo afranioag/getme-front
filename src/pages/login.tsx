@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import InputField from "../components/input/InputField";
 import useSession from "@/hooks/session/use-session/use-session";
@@ -6,45 +6,41 @@ import { useRouter } from "next/router";
 
 const Login = () => {
   const router = useRouter();
-  const session = useSession();
+  const { user, login, isLoading } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
 
-  const onLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const onLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    session.login({
-      username: email,
-      password: password,
-    });
-
-    if (session.user) {
-      router.push("/");
+    setLoginError("");
+    try {
+      await login({ username: email, password: password });
+    } catch (error) {
+      setLoginError("Falha no login, usuário ou senha inválidos");
     }
   };
 
-  return (
-    <div className="min-h-screen flex bg-gray-800">
-      <div className="absolute top-0 right-0 p-20 text-2xl">
-        <Link
-          href="/"
-          className="text-white hover:text-gray-500 hover:bg-gray-100 font-bold px-12 rounded"
-        >
-          Inicio
-        </Link>
-      </div>
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, [user, router]);
 
-      <div className="flex-1 flex items-center justify-end p-8 text-gray-50">
-        <div className="mr-14">
-          <h2 className="text-6xl font-bold mb-2">Encontre-me!</h2>
-          <p className="text-3xl mb-4">
+  return (
+    <div className="min-h-screen flex flex-col md:flex-row bg-gray-800">
+      <div className="flex-1 flex items-center justify-center md:justify-end p-4 md:p-8">
+        <div className="text-center md:text-right">
+          <h2 className="text-4xl md:text-6xl font-bold mb-2">Encontre-me!</h2>
+          <p className="text-xl md:text-3xl mb-4">
             Você pode fazer a diferença na vida de uma pessoa.
           </p>
-          <p className="text-3xl">Faça sua parte!</p>
+          <p className="text-xl md:text-3xl">Faça sua parte!</p>
         </div>
       </div>
 
-      <div className="flex-1 flex items-center justify-start">
-        <div className="w-full max-w-md ml-14">
+      <div className="flex-1 flex items-center justify-center md:justify-start p-4">
+        <div className="w-full max-w-md">
           <div className="bg-white p-8 border border-gray-300 rounded-lg shadow-lg">
             <form onSubmit={onLogin}>
               <InputField
@@ -65,9 +61,12 @@ const Login = () => {
               >
                 Entrar
               </button>
+              {loginError && (
+                <p className="text-red-500 text-center mt-2">{loginError}</p>
+              )}
             </form>
-            <div className="text-center mt-10 p-2 hover:bg-blue-500 bg-gray-800 rounded-md max-w-xs mx-auto">
-              <Link href="signup" className="text-white">
+            <div className="text-center mt-4">
+              <Link href="/signup" className="text-blue-500 hover:underline">
                 CRIAR CONTA
               </Link>
             </div>

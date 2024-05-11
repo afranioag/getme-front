@@ -7,9 +7,11 @@ const MenuLoged = () => {
   const router = useRouter();
 
   const onLogout = () => {
-    console.log("CLEAR");
+    console.log("Executing logout...");
     session.clearSession();
-    router.push("/");
+    router.push("/").then(() => {
+      window.location.reload();
+    });
   };
 
   return (
